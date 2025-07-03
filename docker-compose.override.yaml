@@ -1,0 +1,16 @@
+services:
+
+    app:
+      build: .
+      image: deadmilk:latest
+      container_name: deadmilk
+      environment:
+        - PYTHONUNBUFFERED=1
+      restart: always
+      command: python3 manage.py runserver 0.0.0.0:8000
+      stdin_open: true
+      tty: true
+      ports:
+        - "8047:8000"
+      volumes:
+        - .:/app
