@@ -7,3 +7,6 @@ WORKDIR /app
 ADD . /app
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+ENV STATIC_ROOT /static
+CMD ["/app/entrypoint.sh"]

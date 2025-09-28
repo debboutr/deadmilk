@@ -1,10 +1,21 @@
 services:
-    app:
-      build: .
-      image: deadmilk:latest
-      container_name: deadmilk
-      restart: always
-      command: gunicorn --workers=3 --bind 0.0.0.0:5000 core.wsgi:application
-      ports:
-        - "80:5000"
+  frontend:
+    build: .
+    image: deadmilk:latest
+    container_name: deadmilk
+    restart: always
+    volumes:
+      - ./static:/static
+    environment:
+      DJANGO_CSRF_TRUSTED_ORIGINS: 'http://localhost:5000'
+
+  frontend-proxy:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./static:/static:ro
+    depends_on:
+      - frontend
 
