@@ -1,5 +1,10 @@
 services:
     app:
+      build: .
+      image: deadmilk:latest
+      container_name: deadmilk
+      restart: always
+      command: gunicorn --workers=3 --bind 0.0.0.0:5000 core.wsgi:application
       ports:
         - "80:5000"
 

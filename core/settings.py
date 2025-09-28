@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8=jg2xdlq5%vw*wgvla&9m5c(!t922vhi5tky^8*!#s7_c*t@=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.deadmilkfarms.com','deadmilkfarms.com']
+ALLOWED_HOSTS = ['localhost','www.deadmilkfarms.com','deadmilkfarms.com']
 
 
 # Application definition
