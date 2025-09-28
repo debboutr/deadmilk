@@ -3,6 +3,7 @@ services:
     build: .
     image: deadmilk:latest
     container_name: deadmilk
+    init: true
     restart: always
     volumes:
       - ./static:/static
@@ -11,6 +12,7 @@ services:
 
   frontend-proxy:
     image: nginx:latest
+    container_name: deadginx
     ports:
       - "80:80"
     volumes:
