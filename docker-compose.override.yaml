@@ -11,6 +11,6 @@ services:
       stdin_open: true
       tty: true
       ports:
-        - "8047:8000"
+        - "80:8000"
       volumes:
         - .:/app
