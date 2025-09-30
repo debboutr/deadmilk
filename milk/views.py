@@ -9,4 +9,7 @@ def index(request):
 
 def sound(request):
     sounds = Sound.objects.all()
-    return render(request, "milk/sound.html", {"sounds": sounds})
+    odd_sounds = sounds[::2]
+    even_sounds = sounds[1::2]
+    return render(request, "milk/sound.html", {"odd_sounds": odd_sounds,
+                                               "even_sounds": even_sounds})

@@ -7,9 +7,14 @@
   <style>
     .container {
       display: flex;
-      flex-wrap: wrap;
-      font-size: 5rem;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .column {
+      width: 50%;
       padding: 2rem;
+      background-color: purple;
+      text-align: center;
     }
     .btn {
       margin: 3rem;
@@ -22,32 +27,44 @@
 </head>
 
 <body>
-    <audio id="asdf">
+    <audio id="player">
       Your browser does not support the audio element.
     </audio>
     <h1 class="elite">DEADMILK FARMS.</h1>
   <div class="container">
-    {% for sound in sounds %}
+    <div class="column">
+    {% for sound in odd_sounds %}
       <button
 	  class="btn"
 	  data-song={{ sound.file.url }}>
 	<h1 class="icon">&#{{ sound.emoji }}</h1>
       </button>
     {% endfor %}
+    </div>
+    <div class="column">
+    {% for sound in even_sounds %}
+      <button
+	  class="btn"
+	  data-song={{ sound.file.url }}>
+	<h1 class="icon">&#{{ sound.emoji }}</h1>
+      </button>
+    {% endfor %}
+    </div>
+
   </div>
 </body>
 <script>
-  const audioElement = document.getElementById("asdf");
-  const play_song = (num) => {
-    audioElement.src = num;
+  const audioElement = document.getElementById("player");
+  const play_song = (song) => {
+    audioElement.src = song;
     audioElement.load()
     audioElement.play()
   }
   const buttons = document.querySelectorAll('button');
   buttons.forEach(button => {
     button.onclick = function() {
-      let song = event.currentTarget.getAttribute("data-song");
-      play_song(song);
+      let s = event.currentTarget.getAttribute("data-song");
+      play_song(s);
   }});
 </script>
 
