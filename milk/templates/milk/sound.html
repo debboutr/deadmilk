@@ -4,45 +4,51 @@
 <head>
   <link rel="icon" href="{% static 'milk/favicon.ico' %}">   
   <link rel="stylesheet" href="{% static 'milk/style.css' %}">
+  <style>
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 5rem;
+      padding: 2rem;
+    }
+    .btn {
+      margin: 3rem;
+    }
+    .icon {
+      font-size: 8rem;
+      margin: 3rem;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="">
-
-    this sounds good!
     <audio id="asdf">
-	<source src="{% static 'milk/sounds/sleigh-bells-suspense.wav' %}" type="audio/wav">
-	<source src="{% static 'milk/sounds/correct-answer.wav' %}" type="audio/wav">
       Your browser does not support the audio element.
     </audio>
-    <button data-song=0>
-      <p class="elite">DEADMILK FARMS.</p>
-    </button>
-    <button data-song=1>
-      <p class="elite">DEADMILK FARMS.</p>
-    </button>
+    <h1 class="elite">DEADMILK FARMS.</h1>
+  <div class="container">
+    {% for sound in sounds %}
+      <button
+	  class="btn"
+	  data-song={{ sound.file.url }}>
+	<h1 class="icon">&#{{ sound.emoji }}</h1>
+      </button>
+    {% endfor %}
   </div>
 </body>
 <script>
   const audioElement = document.getElementById("asdf");
-  const sources = audioElement.querySelectorAll('source');
-//  sources.forEach(source => {
-//      console.log(source.src); // Logs each source URL
-//  }); 
   const play_song = (num) => {
-    // this can be done w/o the source element!!!
-    audioElement.src = sources[num].src;
+    audioElement.src = num;
     audioElement.load()
     audioElement.play()
   }
   const buttons = document.querySelectorAll('button');
   buttons.forEach(button => {
     button.onclick = function() {
-      console.log(event.target.getAttribute("data-song"));
-      play_song(event.target.getAttribute("data-song"));
+      let song = event.currentTarget.getAttribute("data-song");
+      play_song(song);
   }});
-
-  //document.getElementById("asdf").setAttribute("src", "new-audio-file.mp3");   
 </script>
 
 </html>

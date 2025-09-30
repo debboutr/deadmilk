@@ -8,6 +8,6 @@ class SoundCategory(models.Model):
 class Sound(models.Model):
     emoji = models.CharField(max_length=30)
     file = models.FileField(upload_to="uploads/")
-    category = models.ManyToManyField(SoundCategory)
+    category = models.ForeignKey(SoundCategory, on_delete=models.CASCADE)
     def __str__(self):
         return self.emoji
