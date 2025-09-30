@@ -7,11 +7,14 @@ body {
   background-color: lemonchiffon;
 }
 
-p {
+.elite {
     color: yellowgreen;
     font-family: "Special Elite", system-ui;
     font-weight: 400;
     font-style: normal;
+}
+
+.fontsize {
     font-size: 4em;
     letter-spacing: 0.5em;
 }
