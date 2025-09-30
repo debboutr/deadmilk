@@ -14,3 +14,6 @@ services:
         - "8033:8000"
       volumes:
         - .:/app
+        - media-data:/vol/media
+volumes:
+  media-data:

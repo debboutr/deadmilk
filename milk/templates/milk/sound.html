@@ -30,6 +30,7 @@
 //      console.log(source.src); // Logs each source URL
 //  }); 
   const play_song = (num) => {
+    // this can be done w/o the source element!!!
     audioElement.src = sources[num].src;
     audioElement.load()
     audioElement.play()

@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import SoundCategory, Sound
+
+admin.site.register(SoundCategory)
+admin.site.register(Sound)
