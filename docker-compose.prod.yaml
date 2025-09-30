@@ -7,6 +7,7 @@ services:
     restart: always
     volumes:
       - ./static:/static
+      - media-data:/vol/media
     environment:
       DJANGO_CSRF_TRUSTED_ORIGINS: 'http://localhost:5000'
 
@@ -19,6 +20,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./static:/static:ro
+      - media-data:/vol/media
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     depends_on:
@@ -34,3 +36,6 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     command: certonly --webroot -w /var/www/certbot --keep-until-expiring --email debboutr@gmail.com -d deadmilkfarms.com --agree-tos
+
+volumes:
+  media-data:
