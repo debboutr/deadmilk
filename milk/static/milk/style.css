@@ -8,10 +8,11 @@ body {
 }
 
 .elite {
-    color: yellowgreen;
-    font-family: "Special Elite", system-ui;
-    font-weight: 400;
-    font-style: normal;
+  padding-top: 4px;
+  color: yellowgreen;
+  font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .fontsize {
