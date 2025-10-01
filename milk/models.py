@@ -20,7 +20,7 @@ class Sound(models.Model):
                                  on_delete=models.CASCADE)
     objects = CustomQuerySet.as_manager()
     def __str__(self):
-        return self.emoji
+        return self.title
     def name(self):
         return self.file.name.split("/")[1].split(".")[0]
 
