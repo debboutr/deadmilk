@@ -15,5 +15,7 @@ services:
       volumes:
         - .:/app
         - media-data:/vol/media
+        - static-data:/vol/static
 volumes:
   media-data:
+  static-data:

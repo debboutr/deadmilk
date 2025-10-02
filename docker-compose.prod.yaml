@@ -6,7 +6,7 @@ services:
     init: true
     restart: always
     volumes:
-      - ./static:/static
+      - static-data:/vol/static
       - media-data:/vol/media
     environment:
       DJANGO_CSRF_TRUSTED_ORIGINS: 'http://localhost:5000'
@@ -19,7 +19,7 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./static:/static:ro
+      - static-data:/vol/static:ro
       - media-data:/vol/media
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
@@ -39,3 +39,4 @@ services:
 
 volumes:
   media-data:
+  static-data:

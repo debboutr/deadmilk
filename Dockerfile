@@ -8,5 +8,5 @@ ADD . /app
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-ENV STATIC_ROOT /static
+ENV STATIC_ROOT /vol/static
 CMD ["/app/entrypoint.sh"]
