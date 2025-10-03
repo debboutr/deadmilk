@@ -27,6 +27,12 @@ services:
     depends_on:
       frontend:
         condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   certbot:
     image: certbot/certbot
