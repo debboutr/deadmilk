@@ -6,6 +6,7 @@ services:
     init: true
     restart: always
     volumes:
+      - ./db.sqlite3:/app/db.sqlite3
       - static-data:/vol/static
       - media-data:/vol/media
     environment:
@@ -18,7 +19,6 @@ services:
       - "443:443"
       - "80:80"
     volumes:
-      - ./db.sqlite3:/app/db.sqlite3
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - static-data:/vol/static:ro
       - media-data:/vol/media
