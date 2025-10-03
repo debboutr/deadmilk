@@ -29,7 +29,7 @@ services:
         condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 30s
+      interval: 47h
       timeout: 10s
       retries: 3
       start_period: 40s
