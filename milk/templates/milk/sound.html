@@ -4,165 +4,52 @@
 <head>
   <link rel="icon" href="{% static 'milk/favicon.ico' %}">   
   <link rel="stylesheet" href="{% static 'milk/style.css' %}">
-  <style>
-    .sticky-div {
-      position: sticky;
-      top: 0;
-      background-color: lemonchiffon;
-    }   
-    span {
-      color: white;
-      font-family: "Special Elite", system-ui;
-      font-weight: 800;
-      font-size: 2rem;
-      font-family: 'Trebuchet MS', sans-serif;
-    }
-    .container {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-    }
-    .column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 50%;
-      padding: 0;
-      text-align: center;
-    }
-    .column button {
-    }
-    .sound {
-      width: 47%;
-      padding: 1rem;
-      margin-bottom: 2rem;
-      aspect-ratio: 1 / 1;
-      background-color: blue;
-      border: 1.5rem solid #000;
-    }
-    .icon {
-      color: yellowgreen;
-      font-family: "Special Elite", system-ui;
-      font-weight: 500;
-      font-size: 4rem;
-      margin-top: 22px;
-    }
-    /* The Modal (background) */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      padding-top: 100px; /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-      background-color: #fefefe;
-      border-radius: 2rem;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-
-    /* The Close Button */
-    .close {
-      color: #aaaaaa;
-      font-size: 3rem;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .group-link {
-      border-radius: 0.5rem;
-      margin: 1rem;
-      padding: 2rem;
-      display: inline-flex;
-      height: auto;
-      width: auto;
-      font-size: 2rem;
-      background-color: #99CC00;
-      border: 2px solid white;
-      color: white;
-      transition: all 0.2s linear 0s;
-    }
-
-    .group-link:hover {
-      background-color: white !important;
-      color: #99CC00;
-    }
-    .fsize {
-      font-size: 3.2rem;
-    }
-  </style>
+  <style></style>
 </head>
+
 <body>
   <audio id="player">
     Your browser does not support the audio element.
   </audio>
   <div id="groupModal" class="modal">
-    <div class="column modal-content">
+    <div class="column modal-content elite">
       <a class="close">&times;</a>
       {% for cat in cats %}
-      <button class="group-link" data-id={{ cat.name }}>
+      <a class="group-link"
+	href="{% url 'sounds' category=cat.name %}">
 	{{ cat.name }}
-      </button>
+      </a>
       {% endfor %}
     </div>
   </div>
-  <div class="container sticky-div">
+  <div class="container sticky-div elite fontsize">
     <div class="column">
-      <a id="stop">
-	<h1 class="elite fsize">DEADMILK FARMS.</h1>
+      <a id="stop" class="">
+	DEADMILK FARMS.
       </a>
     </div>
     <div class="column">
       <a id="group">
-	<div>
-	  <span class="icon">&#128004</span>
-	  <span class="icon">&#128016</span>
-	  <span class="icon">&#129408</span>
-	  <span class="icon">&#129441</span>
-	  <span class="icon">&#129453</span>
-	</div>
+	  <span class="fontsize">&#128004</span>
+	  <span class="fontsize">&#128016</span>
+	  <span class="fontsize">&#129408</span>
+	  <span class="fontsize">&#129441</span>
+	  <span class="fontsize">&#129453</span>
       </a>
     </div>
   </div>
 
-  {% for cat in cats %}
-  <div id={{ cat.name }} class="container handle">
-    <div class="column">
-      {% for sound in cat.sound_set.odd_sounds %}
-      <button
-	  class="sound"
+  <div class="board">
+    {% for sound in sounds %}
+    <div class="answer">
+      <div
+	  class="box"
 	  data-song={{ sound.file.url }}>
 	<span>{{ sound.title.upper }}</span>
-      </button>
-      {% endfor %}
+      </div>
     </div>
-    <div class="column">
-      {% for sound in cat.sound_set.even_sounds %}
-      <button
-	  class="sound"
-	  data-song={{ sound.file.url }}>
-	<span>{{ sound.title.upper }}</span>
-      </button>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </body>
 <script>
   const audioElement = document.getElementById("player");
@@ -179,19 +66,8 @@
     audioElement.load()
     audioElement.play()
   }
-  const buttons = document.querySelectorAll('.sound');
+  const buttons = document.querySelectorAll('.box');
   const divs = document.querySelectorAll('.handle');
-  const groups = document.querySelectorAll('.group-link');
-  groups.forEach(group => {
-    group.onclick = function() {
-      divs.forEach(div => {
-	div.style.display = "none";
-      })
-      let id = event.currentTarget.getAttribute("data-id");
-      document.getElementById(id).style.display = "flex";
-      modal.style.display = "none";
-    }
-  })
   buttons.forEach(button => {
     button.onclick = function() {
       console.log(audioElement.paused);
@@ -204,17 +80,6 @@
   }
   stopBtn.onclick = () => {
     audioElement.pause();
-  }
-  window.onload = function() {
-    divs.forEach(div => {
-      div.style.display = "none";
-    })
-    document.getElementById("GAMESHOW").style.display = "flex";
-  }
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
   }
 </script>
 </html>

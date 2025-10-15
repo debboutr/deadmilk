@@ -7,6 +7,10 @@ def index(request):
     template = loader.get_template('milk/base.html')
     return HttpResponse(template.render())
 
-def sound(request):
+def sound(request, category=None):
+    print(category)
+    if not category:
+        category = "GAMESHOW"
     cats = SoundCategory.objects.all()
-    return render(request, "milk/sound.html", {"cats": cats})
+    sounds = Sound.objects.filter(category__name=category)
+    return render(request, "milk/sound.html", {"sounds": sounds, "cats": cats})
