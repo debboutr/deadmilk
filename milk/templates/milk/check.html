@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="{% static 'milk/favicon.ico' %}">   
+  <link rel="stylesheet" href="{% static 'milk/style.css' %}">
+  <script src="{% static 'milk/test.js' %}"></script>
+  <style></style>
+</head>
+
+<body>
+  <h1>this is a check</h1>
+  <p id="front"></p>
+  <button onclick="main()" class="navBtn">Measure</button>
+  <script>
+    const el = document.getElementById("front");
+    el.setAttribute('style', 'white-space: pre;');
+  </script>
+</body>
+</html>
+
+

@@ -14,3 +14,8 @@ def sound(request, category=None):
     cats = SoundCategory.objects.all()
     sounds = Sound.objects.filter(category__name=category)
     return render(request, "milk/sound.html", {"sounds": sounds, "cats": cats})
+
+def check(request):
+    template = loader.get_template('milk/check.html')
+    return HttpResponse(template.render())
+

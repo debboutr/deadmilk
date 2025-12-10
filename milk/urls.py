@@ -6,4 +6,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("sounds/", views.sound, name="sounds"),
     path("sounds/<slug:category>/", views.sound, name="sounds"),
+    path("check/", views.check, name="check"),
 ]

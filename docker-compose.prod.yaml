@@ -3,7 +3,7 @@ services:
     build: .
     image: deadmilk:latest
     container_name: deadmilk
-    init: true
+    init: true # cleaner shutdown
     restart: always
     volumes:
       - ./db.sqlite3:/app/db.sqlite3
