@@ -5,13 +5,30 @@
   <link rel="icon" href="{% static 'milk/favicon.ico' %}">   
   <link rel="stylesheet" href="{% static 'milk/style.css' %}">
   <script src="{% static 'milk/test.js' %}"></script>
-  <style></style>
+  <style>
+    .container {
+      display: grid;
+      grid-template-columns: repeat(5,auto);
+      background-color: dodgerblue;
+      padding: 10px;
+    }
+    .container div {
+      background-color: #f1f1f1;
+      border: 1px solid black;
+      border-radius: 10px;
+      padding: 1em;
+      font-size: 0.7em;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
   <h1>this is a check</h1>
+  <div id="homie" class="container"></div>
   <p id="front"></p>
-  <button onclick="main()" class="navBtn">Measure</button>
+  <p id="message"></p>
+  <button onclick="getLocation()" class="navBtn">Measure</button>
   <script>
     const el = document.getElementById("front");
     el.setAttribute('style', 'white-space: pre;');
