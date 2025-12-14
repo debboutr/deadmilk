@@ -19,12 +19,12 @@ function showMessage(message) {
 }
 
 function getLocation() {
-    if (supportsGeolocation()) {
-        var options = { enableHighAccuracy: true };
-        watchId = navigator.geolocation.watchPosition(showPosition, showError, options);
-    } else {
-        showMessage("Geolocation isn't supported by your browser");
-    }
+  if (supportsGeolocation()) {
+    var options = { enableHighAccuracy: true };
+    watchId = navigator.geolocation.watchPosition(showPosition, showError, options);
+  } else {
+    showMessage("Geolocation isn't supported by your browser");
+  }
 }
 
 function endWatch() {
@@ -36,7 +36,9 @@ function endWatch() {
 }
 
 function showPosition(position) {
+    console.log("hello govna");
     var datetime = new Date(position.timestamp).toTimeString();
+    console.log(position);
     showMessage('Latitude: ' + position.coords.latitude + '<br>' +
         'Longitude: ' + position.coords.longitude + '<br>' +
         'Altitude: ' + position.coords.altitude + '<br>' +

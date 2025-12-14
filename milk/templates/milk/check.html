@@ -4,7 +4,6 @@
 <head>
   <link rel="icon" href="{% static 'milk/favicon.ico' %}">   
   <link rel="stylesheet" href="{% static 'milk/style.css' %}">
-  <script src="{% static 'milk/test.js' %}"></script>
   <style>
     .container {
       display: grid;
@@ -24,16 +23,127 @@
 </head>
 
 <body>
+  
   <h1>this is a check</h1>
   <div id="homie" class="container"></div>
-  <p id="front"></p>
-  <p id="message"></p>
   <button onclick="getLocation()" class="navBtn">Measure</button>
   <script>
-    const el = document.getElementById("front");
-    el.setAttribute('style', 'white-space: pre;');
+
+	function getCookie(name) {
+	    let cookieValue = null;
+	    if (document.cookie && document.cookie !== '') {
+		const cookies = document.cookie.split(';');
+		for (let i = 0; i < cookies.length; i++) {
+		    const cookie = cookies[i].trim();
+		    // Does this cookie string begin with the name we want?
+		    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+			cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			break;
+		    }
+		}
+	    }
+	    return cookieValue;
+	}
+
+	var watchId = 0;
+
+	function forceRedraw(element) {
+	    var disp = element.style.display;
+	    element.style.display = 'none';
+	    var trick = element.offsetHeight; // Forces reflow
+	    element.style.display = disp;
+	}   
+
+	function supportsGeolocation() {
+	    return 'geolocation' in navigator;
+	}
+
+	function showMessage(message) {
+	  var container = document.getElementById('homie');
+	  var newDiv = document.createElement('div');
+	  newDiv.innerHTML = message;
+	  container.appendChild(newDiv);   
+	  console.log(message);
+	}
+
+	function getLocation() {
+	    if (supportsGeolocation()) {
+		var options = { enableHighAccuracy: true };
+		watchId = navigator.geolocation.watchPosition(showPosition, showError, options);
+	    } else {
+		showMessage("Geolocation isn't supported by your browser");
+	    }
+	}
+
+	function endWatch() {
+	    if (watchId != 0) {
+		navigator.geolocation.clearWatch(watchId);
+		watchId = 0;
+		showMessage("Monitoring ended.");
+	    }
+	}
+
+	function showPosition(position) {
+	    var datetime = new Date(position.timestamp).toTimeString();
+	    const postData = {
+	      latitude:  position.coords.latitude, 
+	      longitude: position.coords.longitude,
+	      altitude: position.coords.altitude,
+	      accuracy: position.coords.accuracy,
+	      timestamp: datetime.slice(0,8)
+	    };
+
+	    const url = 'http://localhost:8033/check/';
+
+	    const csrftoken = getCookie('csrftoken');
+
+	    console.log("shell", csrftoken);
+
+	    const options = {
+	      method: 'POST',
+	      headers: {
+		'Content-Type': 'application/json',
+		'X-CSRFToken': csrftoken,
+	      },
+	      body: JSON.stringify(postData)
+	    };
+
+	    fetch(url, options)
+	      .then(response => {
+		if (!response.ok) {
+		  throw new Error('Network response was not ok');
+		}
+		return response.json();
+	      })
+	      .then(data => console.log('Success:', data))
+	      .catch(error => console.error('Error:', error));   
+	    showMessage('Latitude: ' + position.coords.latitude + '<br>' +
+		'Longitude: ' + position.coords.longitude + '<br>' +
+		'Altitude: ' + position.coords.altitude + '<br>' +
+		'Accuracy: ' + position.coords.accuracy + '<br>' +
+		'Timestamp: ' + datetime.slice(0,8));
+	}
+
+	function showError(error) {
+	    switch (error.code) {
+		case error.PERMISSION_DENIED:
+		    showMessage("User denied Geolocation access request.");
+		    break;
+		case error.POSITION_UNAVAILABLE:
+		    showMessage("Location Information unavailable.");
+		    break;
+		case error.TIMEOUT:
+		    showMessage("Get user location request timed out.");
+		    break;
+		case error.UNKNOWN_ERROR:
+		    showMessage("An unknown error occurred.");
+		    break;
+	    }
+	}
   </script>
 </body>
 </html>
 
+
+  <!--<script src="{% static 'milk/testes.js' %}"></script>-->
 

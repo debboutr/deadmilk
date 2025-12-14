@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+import json
+
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.shortcuts import render
 from .models import Sound, SoundCategory
@@ -16,6 +18,10 @@ def sound(request, category=None):
     return render(request, "milk/sound.html", {"sounds": sounds, "cats": cats})
 
 def check(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}")
+        return JsonResponse(data)   
     template = loader.get_template('milk/check.html')
     return HttpResponse(template.render())
 
