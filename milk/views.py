@@ -21,6 +21,8 @@ def check(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         print(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}")
+        with open('coords.csv', 'a') as file:
+            file.write(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}\n")
         return JsonResponse(data)   
     template = loader.get_template('milk/check.html')
     return HttpResponse(template.render())
