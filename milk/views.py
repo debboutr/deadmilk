@@ -1,10 +1,13 @@
 import os.path
 import json
+import logging
 
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.shortcuts import render
 from .models import Sound, SoundCategory
+
+logger = logging.getLogger(__file__)
 
 def index(request):
     template = loader.get_template('milk/base.html')
@@ -21,11 +24,13 @@ def sound(request, category=None):
 def check(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}\n")
+        message = f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}"
+        print(message)
+        logger.info(message)
         if not os.path.isfile("coords.csv"):
             open('coords.csv', 'w')
         with open('coords.csv', 'a') as file:
-            file.write(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}\n")
+            file.write(message)
         return JsonResponse(data)   
     template = loader.get_template('milk/check.html')
     return HttpResponse(template.render())
