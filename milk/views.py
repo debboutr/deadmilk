@@ -24,7 +24,7 @@ def sound(request, category=None):
 def check(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        message = f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}"
+        message = f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}\n"
         print(message)
         logger.info(message)
         if not os.path.isfile("coords.csv"):
