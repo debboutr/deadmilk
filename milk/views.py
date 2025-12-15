@@ -20,10 +20,9 @@ def sound(request, category=None):
 def check(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}")
+        print(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}\n")
         with open('coords.csv', 'a') as file:
-            file.write(
-                    f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy'], {data['timestamp']}\n")
+            file.write(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}\n")
         return JsonResponse(data)   
     template = loader.get_template('milk/check.html')
     return HttpResponse(template.render())
