@@ -1,4 +1,4 @@
-import os.path
+import os
 import json
 import logging
 
@@ -28,7 +28,7 @@ def check(request):
         print(message)
         logger.info(message)
         if not os.path.isfile("coords.csv"):
-            open('coords.csv', 'w')
+            os.mknod('coords.csv', 'w')
         with open('coords.csv', 'a') as file:
             file.write(message)
         return JsonResponse(data)   
