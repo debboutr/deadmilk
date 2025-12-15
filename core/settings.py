@@ -134,6 +134,9 @@ LOGGING = {
     "disable_existing_loggers": False,
     "root": {"level": "INFO", "handlers": ["file"]},
     "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
