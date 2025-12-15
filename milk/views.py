@@ -1,3 +1,4 @@
+import os.path
 import json
 
 from django.http import HttpResponse, JsonResponse
@@ -21,6 +22,8 @@ def check(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         print(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}\n")
+        if not os.path.isfile("coords.csv"):
+            open('coords.csv', 'w')
         with open('coords.csv', 'a') as file:
             file.write(f"{data['longitude']}, {data['latitude']}, {data['altitude']}, {data['accuracy']}, {data['timestamp']}\n")
         return JsonResponse(data)   
